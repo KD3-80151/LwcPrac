@@ -1,4 +1,4 @@
-// trigger AccountTrigger on Account (after insert, before insert, after update, before update, after delete, before delete) {
+ trigger AccountTrigger on Account (after insert, before insert, after update, before update, after delete, before delete) {
 // if(trigger.isInsert && trigger.isAfter) 
 //     AccountTriggerHandler.AccountTriggerContact(Trigger.new);
 //     if(trigger.isAfter && trigger.isInsert){
@@ -22,4 +22,8 @@
 //         UpdateMailingCity.MailCity(Trigger.new, Trigger.oldMap);
 //     }
         
-// }
+        if(trigger.isAfter && trigger.isInsert){
+            PhoneNumberController.PhoneNoRequired(Trigger.new);
+        }
+
+ }

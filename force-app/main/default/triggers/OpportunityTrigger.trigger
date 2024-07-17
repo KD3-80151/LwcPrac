@@ -1,4 +1,4 @@
-// trigger OpportunityTrigger on Opportunity (after insert, before insert, after update, before update, after delete, before delete) {
+trigger OpportunityTrigger on Opportunity (after insert, before insert, after update, before update, after delete, before delete) {
 //     //if(Trigger.isBefore && Trigger.isDelete){
 //     //    OpportunityTriggerHandler.OpportunityClosed(Trigger.old);
 //    // }
@@ -21,4 +21,4 @@
 //     if(Trigger.isBefore && Trigger.isUpdate){
 //         OpportunityValidationTrigger.opportunityValidation(Trigger.new, Trigger.oldMap);
 //     }
-// }
+ }

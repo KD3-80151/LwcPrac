@@ -15,10 +15,11 @@ export default class ContactDetailsList extends LightningElement {
     ];
 
     handleSearch(event) {
-        
+        debugger;
         const searchKey = event.target.value;
+        console.log(searchKey);
         if (searchKey) {
-            getContact({ searchKey })
+            getContact({ searchKey })//imperative method
                 .then(result => {
                     console.log('result:::::::', result);
                      this.contacts = result.map(contact => ({

@@ -22,8 +22,8 @@
 //         UpdateMailingCity.MailCity(Trigger.new, Trigger.oldMap);
 //     }
         
-        if(trigger.isAfter && trigger.isInsert){
-            PhoneNumberController.PhoneNoRequired(Trigger.new);
-        }
+        // if(trigger.isAfter && trigger.isInsert){
+        //     PhoneNumberController.PhoneNoRequired(Trigger.new);
+        // }
 
  }

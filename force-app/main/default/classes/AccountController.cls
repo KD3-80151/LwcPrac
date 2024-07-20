@@ -15,7 +15,20 @@ public with sharing class AccountController {
         update opportunity;
     }
 
-    
+    @AuraEnabled(cacheable=true)
+    public static List<Task> getTaskByAccountId(String accountId){
+        try {
+            return [SELECT Id, Subject, Status, Priority, ActivityDate from Task WHERE AccountId = :accountId];
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static void updateTask(Task task) {
+        update task;
+    }
 
 
 }

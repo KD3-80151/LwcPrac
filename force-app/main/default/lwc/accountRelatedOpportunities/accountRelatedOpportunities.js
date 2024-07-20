@@ -8,6 +8,9 @@ export default class AccountRelatedOpportunities extends LightningElement {
     @track selectedAccountId;
     @track opportunities;
     @track searchKey = '';
+    
+
+
 
     @wire(search, { searchKey: '' })
     wiredAccounts({ error, data }) {

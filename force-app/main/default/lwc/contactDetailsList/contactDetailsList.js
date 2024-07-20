@@ -96,4 +96,21 @@ export default class ContactDetailsList extends LightningElement {
 
 
 
+
+
+
+//lookup functionalities in lwc
+//6 save data and disable cache
+
+
+
+
+
+
+
+
+
+
+
+
 //passing the string and from the list of string whether it has duplicate or not or have to return just true or false

@@ -7,11 +7,12 @@ public with sharing class SchemaObject {
         
         for (Schema.SObjectType sObjectType : globalDescribe.values()) {
             Schema.DescribeSObjectResult describeResult = sObjectType.getDescribe();
-                
+
             if (describeResult.isCustom() && !describeResult.isCustomSetting()) {
                 Map<String, String> objectInfo = new Map<String, String>();
                 objectInfo.put('apiName', describeResult.getName());
                 objectInfo.put('label', describeResult.getLabel());
+                objectInfo.put('description', describeResult.getName());
                 customObjects.add(objectInfo);
             }
         }

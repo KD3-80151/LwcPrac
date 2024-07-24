@@ -1,4 +1,3 @@
-// customObjectDisplay.js
 import { LightningElement, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import getCustomObjects from '@salesforce/apex/SchemaObject.getCustomObjects';
@@ -11,13 +10,24 @@ const COLUMNS = [
         typeAttributes: { 
             label: { fieldName: 'label' }, 
             name: 'view', 
-            variant: 'base' 
+            variant: 'base',
+            data: { value: 'view' }
+        } 
+    },
+    { 
+        label: 'View Fields and Relationships', 
+        type: 'button', 
+        typeAttributes: { 
+            label: 'View', 
+            name: 'view_fields', 
+            variant: 'base',
+            data: { value: 'view_fields' }
         } 
     }
 ];
 
-
 export default class CustomObjectDisplay extends NavigationMixin(LightningElement) {
+    
     columns = COLUMNS;
     customObjects;
 
@@ -32,13 +42,25 @@ export default class CustomObjectDisplay extends NavigationMixin(LightningElemen
 
     handleRowAction(event) {
         const apiName = event.detail.row.apiName;
+        const action = event.detail.action.data.value;
 
-        this[NavigationMixin.Navigate]({
-            type: 'standard__objectPage',
-            attributes: {
-                objectApiName: apiName,
-                actionName: 'home'
-            }
-        });
+        if (action === 'view') {
+            this[NavigationMixin.Navigate]({
+                type: 'standard__objectPage',
+                attributes: {
+                    objectApiName: apiName,
+                    actionName: 'home'
+                }
+            });
+        } else if (action === 'view_fields') {
+            this.navigateToObjectManager(apiName);
+        }
+    }
+
+    navigateToObjectManager(apiName) {
+        const objectManagerUrl = `/lightning/setup/ObjectManager/home?objectApiName=${apiName}`;
+        //lightning/setup/ObjectManager/01IdL000000YyRZ/view
+        window.open(objectManagerUrl, '_blank');
     }
 }
+

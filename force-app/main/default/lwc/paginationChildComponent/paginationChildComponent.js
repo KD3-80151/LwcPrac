@@ -30,7 +30,8 @@ export default class PaginationChildComponent extends LightningElement {
         const end = this.currentPage * this.recordSize;
         this.visibleRecords = this.totalRecords.slice(start, end);
         //debugger;
-        this.dispatchEvent(new CustomEvent('sliced', {
+        //custom event for child to parent comm 
+        this.dispatchEvent(new CustomEvent('sliced', { //sliced is event name 
             detail:{
                 records: this.visibleRecords
             }

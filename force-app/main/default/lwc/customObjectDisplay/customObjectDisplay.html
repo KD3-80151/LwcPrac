@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="Custom Objects">
+        <template if:true={customObjects}>
+            <lightning-datatable
+                key-field="apiName"
+                data={customObjects}
+                columns={columns}
+                onsave={handleRowAction}
+                onrowaction={handleRowAction}
+                hide-checkbox-column="true"
+            ></lightning-datatable>
+        </template>
+    </lightning-card>
+</template>

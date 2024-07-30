@@ -30,7 +30,12 @@ public with sharing class GetCustomObject {
                 Map<String, String> fieldInfo = new Map<String, String>();
                 fieldInfo.put('apiName', fieldDescribe.getName());
                 fieldInfo.put('label', fieldDescribe.getLabel());
-                fieldInfo.put('type', fieldDescribe.getType().name());
+                
+                String fieldType = fieldDescribe.getType().name();
+                if (fieldType == 'REFERENCE') {
+                    fieldType = 'TEXT';
+                }
+                fieldInfo.put('type', fieldType);
                 fieldsList.add(fieldInfo);
             }
         }
@@ -41,6 +46,7 @@ public with sharing class GetCustomObject {
     public static List<Map<String, Object>> getRecords(String objectName, List<String> fieldNames) {
         List<Map<String, Object>> records = new List<Map<String, Object>>();
         String query = 'SELECT ' + String.join(fieldNames, ', ') + ' FROM ' + objectName + ' LIMIT 100';
+        //Schema.DescribeFieldResult f = Schema.SObjectType.objectName.fieldNames;
         List<SObject> sObjectRecords = Database.query(query);
         for (SObject record : sObjectRecords) {
             Map<String, Object> recordMap = new Map<String, Object>();
@@ -49,6 +55,7 @@ public with sharing class GetCustomObject {
             }
             records.add(recordMap);
         }
+        System.debug(records);
         return records;
     }
 }

@@ -1,3 +1,11 @@
+/**
+ * ----------------------------------------------------------------------------------------------------
+ * Name: Sagar Kumar
+ * Created Date: 29/06/2024
+ * Last Modified Date: 
+ * Purpose: Handler to get list of an account using owner Id
+ * -----------------------------------------------------------------------------------------------------
+ */
 public class AccountOwnerTriggerHandler {
     public static void AccountTriggerOwner(List<Account> accountList, Map<Id, Account> mapAccount){
         List<Contact> contactListUpdate = new List<Contact>();

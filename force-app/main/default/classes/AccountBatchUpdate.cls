@@ -1,3 +1,13 @@
+/**
+ * ----------------------------------------------------------------------------------------------------
+ * Name: Sagar Kumar
+ * Created Date: 20/06/2024
+ * Last Modified Date: 
+ * Purpose: Calling One batch from one to another
+ * -----------------------------------------------------------------------------------------------------
+ */
+
+
 public class AccountBatchUpdate implements Database.Batchable<sObject>, Database.Stateful{
     public Database.QueryLocator start (Database.BatchableContext bc){
         return Database.getQueryLocator ('select Id, Name, from Account');
@@ -9,7 +19,8 @@ public class AccountBatchUpdate implements Database.Batchable<sObject>, Database
         }
         update scope;
     }
-    
+    //calling AccountBatchTwoUpdate 
+    //To Invoke Batch Apex From Another Batch Apex In Salesforce
     public void finish (Database.BatchableContext bc){
         Database.executeBatch(new AccountBatchTwoUpdate());
     }

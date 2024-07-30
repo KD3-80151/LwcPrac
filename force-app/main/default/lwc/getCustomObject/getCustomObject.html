@@ -17,7 +17,8 @@
                                 selected-label="Selected Fields" 
                                 field-level-help="Select the fields you want to display" 
                                 options={fieldList} 
-                                onchange={handleFieldChange}>
+                                onchange={handleFieldChange} 
+                                value={selectedFields}>
         </lightning-dual-listbox>
         <lightning-button label="Get Details" 
                           onclick={handleGetDetails}>

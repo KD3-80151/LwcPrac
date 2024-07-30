@@ -1,3 +1,12 @@
+/**
+ * ----------------------------------------------------------------------------------------------------
+ * @description         : Strategy Design Pattern
+ * @author              : Sagar Kumar
+ * @last modified on    : 29/07/2024
+ * @last modified date  :  
+ * -----------------------------------------------------------------------------------------------------
+ **/
+
 public class Duplicate {
     public static void printDuplicates(String str) {
         Map<String, Integer> count = new Map<String, Integer>();

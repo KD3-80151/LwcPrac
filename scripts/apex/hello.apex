@@ -9,4 +9,11 @@
 //System.debug('Hello World!');
 //System.debug('My name is ' + tempvar);
 
-SalesforceIntegrationUsingRest.accuWeather('Jind');
+//SalesforceIntegrationUsingRest.accuWeather('Jind');
+
+
+//get the singleton instance
+SingletonExample single = SingletonExample.getInstance();
+
+//calling a method on singleton instance
+single.calledMethodByInstance();

@@ -1,3 +1,11 @@
+/**
+ * ----------------------------------------------------------------------------------------------------
+ * Name: Sagar Kumar
+ * Created Date: 29/07/2024
+ * Last Modified Date:  
+ * Purpose: Setting Name of contact as Account Name 
+ * -----------------------------------------------------------------------------------------------------
+ */
 public class AccountTriggerHandler {
     public static void AccountTriggerContact(List<Account> accountList){
 

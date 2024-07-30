@@ -1,3 +1,13 @@
+/**
+ * ----------------------------------------------------------------------------------------------------
+ * Name: Sagar Kumar
+ * Created Date: 28/09/2024
+ * Last Modified Date: 
+ * Purpose: To get case using caseId
+ * -----------------------------------------------------------------------------------------------------
+ */
+
+
 public with sharing class CaseController {
     
     @AuraEnabled(cacheable=true)

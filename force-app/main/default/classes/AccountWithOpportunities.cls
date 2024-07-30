@@ -1,4 +1,13 @@
-public class AccountWithOpportunities {
+/**
+ * ----------------------------------------------------------------------------------------------------
+ * Name: Sagar Kumar
+ * Created Date: 28/09/2024
+ * Last Modified Date: 
+ * Purpose: To get Opportunity and related account
+ * -----------------------------------------------------------------------------------------------------
+ */
+
+ public class AccountWithOpportunities {
     public static Map<Id, List<Opportunity>> MapAcntWithOpp(List<Id> accountIdList){
         Map<Id, List<Opportunity>> acntMap = new Map<Id, List<Opportunity>>();
          List<Opportunity> oppo = [SELECT Id, Name, AccountId FROM Opportunity WHERE AccountId IN :accountIdList];
@@ -15,10 +24,6 @@ public class AccountWithOpportunities {
                 acntMap.put(accId, new List<Opportunity>());
             }
         }
-        
         return acntMap;
-        
-        
-
     }
 }

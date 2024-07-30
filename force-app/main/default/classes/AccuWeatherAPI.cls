@@ -1,3 +1,12 @@
+/**
+ * ----------------------------------------------------------------------------------------------------
+ * Name: Sagar Kumar
+ * Created Date: 27/06/2024
+ * Last Modified Date: 
+ * Purpose: Getting the weather details of Weather
+ * -----------------------------------------------------------------------------------------------------
+ */
+
 public class AccuWeatherAPI {
 public static void accuWeather(String cityName){
      Http http = new Http();

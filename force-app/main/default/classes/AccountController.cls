@@ -1,3 +1,12 @@
+/**
+ * ----------------------------------------------------------------------------------------------------
+ * Name: Sagar Kumar
+ * Created Date: 27/06/2024
+ * Last Modified Date: 
+ * Purpose: Get related Opportunity, Task of an Account
+ * -----------------------------------------------------------------------------------------------------
+ */
+
 public with sharing class AccountController {
     @AuraEnabled(cacheable=true)
     public static List<Account> searchAccounts(String searchKey) {
@@ -15,6 +24,7 @@ public with sharing class AccountController {
         update opportunity;
     }
 
+    //
     @AuraEnabled(cacheable=true)
     public static List<Task> getTaskByAccountId(String accountId){
         try {

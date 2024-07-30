@@ -1,3 +1,13 @@
+/**
+ * ----------------------------------------------------------------------------------------------------
+ * Name: Sagar Kumar
+ * Created Date: 27/06/2024
+ * Last Modified Date: 
+ * Purpose: to calculate the total amount of all opportunities related to each account and 
+ * then determine which account has the highest total opportunity amount
+ * -----------------------------------------------------------------------------------------------------
+ */
+
 public class AmountSumRelatedOpp {
     public void AmountWithMap(){
         Map<Id, Decimal> accountMap = new Map<Id, Decimal>();

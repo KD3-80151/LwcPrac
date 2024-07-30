@@ -37,8 +37,11 @@ export default class GetCustomObject extends LightningElement {
     }
 
     handleGetDetails() {
+        debugger;
         if (this.selectedObject && this.selectedFields.length > 0) {
+            console.log('Fetching records for:', this.selectedObject, this.selectedFields);
             this.fetchRecords(this.selectedObject, this.selectedFields);
+            this.selectedFields = [];
         }
     }
 
@@ -46,7 +49,7 @@ export default class GetCustomObject extends LightningElement {
         getFields({ objectName })
             .then(result => {
                 this.fieldList = result.map(field => ({
-                    label: field.label,
+                    label: `${field.label} (${field.type})`,
                     value: field.apiName
                 }));
             })
@@ -59,11 +62,14 @@ export default class GetCustomObject extends LightningElement {
         getRecords({ objectName, fieldNames })
             .then(result => {
                 this.records = result;
-                this.columns = fieldNames.map(field => ({
-                    label: this.fieldList.find(f => f.value === field).label,
-                    fieldName: field,
-                    type: 'text'
-                }));
+                this.columns = fieldNames.map(field => {
+                    const fieldInfo = this.fieldList.find(f => f.value === field);
+                    return {
+                        label: fieldInfo.label,
+                        fieldName: field,
+                        type: 'text'
+                    };
+                });
             })
             .catch(error => {
                 console.error('Error fetching records:', error);

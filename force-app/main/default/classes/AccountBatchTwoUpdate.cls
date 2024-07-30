@@ -1,3 +1,13 @@
+/**
+ * ----------------------------------------------------------------------------------------------------
+ * Name: Sagar Kumar
+ * Created Date: 20/06/2024
+ * Last Modified Date: 
+ * 
+ * -----------------------------------------------------------------------------------------------------
+ */
+
+//class is used To Invoke Batch Apex From Another Batch Apex In Salesforce
 public class AccountBatchTwoUpdate implements Database.Batchable<sObject>{
     public Database.QueryLocator start(Database.BatchableContext bc){
         return Database.getQueryLocator ('select Id,Name, Description from Account where ');

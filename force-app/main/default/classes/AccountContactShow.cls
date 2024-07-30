@@ -1,9 +1,19 @@
+/**
+ * ----------------------------------------------------------------------------------------------------
+ * @description         : to get and set Account Name
+ * @author              : Sagar Kumar
+ * @last modified on    : 20/06/2024
+ * @last modified date  :  
+ * -----------------------------------------------------------------------------------------------------
+ **/
+
+ 
 public class AccountContactShow {
     public class AccountContact {
         public String accName { get; set; }
         public String cFname { get; set; }
         public String cLname { get; set; }
-//        public String typeOfData { get; set; }
+//      public String typeOfData { get; set; }
 
         public AccountContact(String accName, String cFname, String cLname) {
             this.accName = accName;
@@ -11,7 +21,7 @@ public class AccountContactShow {
             this.cLname = cLname;
         }
     }
-
+    // To search Account and related contact name 
     public static List<AccountContact> searchName(String searchList) {
         List<AccountContact> results = new List<AccountContact>();
 

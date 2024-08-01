@@ -13,7 +13,16 @@
 
 
 //get the singleton instance
-SingletonExample single = SingletonExample.getInstance();
+//SingletonExample single = SingletonExample.getInstance();
 
 //calling a method on singleton instance
-single.calledMethodByInstance();
+//single.calledMethodByInstance();
+
+// Map<String, String> result = GetAccountRest.getAccessTokenDetails();
+// System.debug('Access Token: ' + result.get('access_token'));
+// System.debug('Instance URL: ' + result.get('instance_url'));
+
+List<Account> accounts = GetAccountRest.getAccounts();
+for (Account acc : accounts) {
+    System.debug('Account Id: ' + acc.Id + ', Name: ' + acc.Name);
+}

@@ -22,4 +22,23 @@ public class CreateOpportunityOnAgricultureHandler {
         }
     }
 
+    public static void createOppoByAccount(List<Account> accList){
+
+        List<Opportunity> oppo = new List<Opportunity>();
+        for (Account acc : accList) {
+            if (acc.Industry == 'Agriculture') {
+                Opportunity opp = new Opportunity();
+                opp.AccountId = acc.Id;
+                //Stage = ‘Prospecting’, Amount = $0, CloseDate = ’90 days from today’.
+                opp.StageName = 'Prospecting';
+                opp.Amount = 0;
+                opp.CloseDate = Date.today().addDays(90);
+            }
+        }
+
+        if (!oppo.isEmpty()) {
+            insert oppo;
+        }
+    }
+
 }

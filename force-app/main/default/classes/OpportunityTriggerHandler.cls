@@ -1,4 +1,4 @@
-public class OpportunityTriggerHandler {
+public class                 OpportunityTriggerHandler {
     public static void OpportunityClosed(List<Opportunity> oppoList){
         
         Profile prof = [Select Id From Profile where Name = 'System Administrator' LIMIT 1];

@@ -18,7 +18,7 @@ public with sharing class AccountTriggerHandler implements ITrigger {
     public void beforeInsert(List<SObject> newRecords) {
         
     }
-
+  
     public void beforeUpdate(Map<Id, SObject> oldRecordMap, Map<Id, SObject> newRecordMap) {
         
     }

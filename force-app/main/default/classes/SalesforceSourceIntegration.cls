@@ -1,4 +1,5 @@
 public with sharing class SalesforceSourceIntegration {
+    
     //@future (callout=true)
     // public static void getDetails() {
         
@@ -15,6 +16,7 @@ public with sharing class SalesforceSourceIntegration {
     // }
 
     // @future (callout=true)
+
     public static void getDetails(String searchKey) {
         
         HttpRequest req = new HttpRequest();
@@ -31,5 +33,4 @@ public with sharing class SalesforceSourceIntegration {
     }
 }
 // SalesforceSourceIntegration.getDetails('test');
-
-    
+// SalesforceSourceIntegration.getDetails();

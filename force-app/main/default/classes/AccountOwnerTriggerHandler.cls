@@ -4,6 +4,7 @@
  * Created Date: 29/06/2024
  * Last Modified Date: 
  * Purpose: Handler to get list of an account using owner Id
+ * if we are changing the account owner then its contact owner should also get update
  * -----------------------------------------------------------------------------------------------------
  */
 public class AccountOwnerTriggerHandler {
@@ -37,10 +38,39 @@ public class AccountOwnerTriggerHandler {
                     c.OwnerId = a.OwnerId;
                     contToUpdate.add(c);
                 }
-                
             }
         }
-
         if(!contToUpdate.isEmpty())  update contToUpdate;
     }
+
+
+    public static void insertTest() {
+        List<Account> acc = new List<Account>();
+        for (Integer i = 0; i < 100; i++) {
+            acc.add(new Account(Name = 'B Test:' + i)); 
+        }
+        insert acc;
 }
+
+    public static void deleteTestRecords() {
+   
+        List<Account> accToDelete = [SELECT Id,Name FROM Account WHERE Name LIKE 'Insert Test:%'];
+            delete accToDelete;
+        
+
+}
+
+
+
+    /*Execute from anonymous windows 
+        AccountOwnerTriggerHandler.insertTest();
+
+        AccountOwnerTriggerHandler.deleteTestRecords();
+
+    */
+
+}
+/*
+    
+     
+ */

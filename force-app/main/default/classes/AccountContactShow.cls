@@ -24,9 +24,10 @@ public class AccountContactShow {
     // To search Account and related contact name 
     public static List<AccountContact> searchName(String searchList) {
         List<AccountContact> results = new List<AccountContact>();
-
+        
         List<Account> accountList = [select Name, Type from Account where Name like :('%' + searchList + '%')];
         for (Account acc : accountList) {
+            
             results.add(new AccountContact('Account', acc.Name, acc.Type));
         }
 

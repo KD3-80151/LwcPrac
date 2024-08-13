@@ -7,13 +7,14 @@ export default class AccountData extends LightningElement {
     @track isLoading = false;
 
     columns = [
-        { label: 'Account ID', fieldName: 'Id' },
+        { label: 'Account ID', fieldName:  'Id' },
         { label: 'Account Name', fieldName: 'Name' }
     ];
 
+    // Calling Apex imperatively on a button click
     handleFetchAccounts() {
         this.isLoading = true;
-        getAccounts()
+        getAccounts()//
             .then(result => {
                 this.accounts = result;
                 this.isLoading = false;

@@ -6,10 +6,7 @@ public class                 OpportunityTriggerHandler {
         for(Opportunity oppo: oppoList){
             if(System.UserInfo.getProfileId() != prof.Id && (oppo.StageName =='Closed Won' || oppo.StageName =='Closed Lost')){
                 oppo.addError('You are not admin and so you cannot delete it ');
-
             }
         }
-
     }
-
 }

@@ -16,11 +16,10 @@ public class ErrorAccountDelete {
     }
 
     public static void errorMessageDisplay(List<Account> accList){
-        Set<Id> accountIds = new Set<Id>();
+        Set<Id> accountIds = new Set<Id>(); 
         for(Account acc : accList){
             accountIds.add(acc.Id);
         }
-
         List<Contact> cont = [select Id from Contact where AccountId IN : accountIds];
 
         if (!cont.isEmpty()) {
@@ -29,7 +28,17 @@ public class ErrorAccountDelete {
                 a.addError(message);
             }
         }
+    }
 
+    public static void fieldErrorMessage(List<Account> accntList){
+        
+        for (Account acc : accntList) {
+            if (acc.AccountNumber == null) {
+                acc.AccountNumber.addError('Account Number is required');
+            }
+        }
+
+        
     }
 
 }

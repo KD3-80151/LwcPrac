@@ -41,9 +41,6 @@ export default class ContactCreation extends LightningElement {
         fields['AccountId'] = this.recordId;
 
         const input = {apiName: CONTACT_OBJECT.objectApiName, fields };
-        //constructs the recordInput object with the necessary data (apiName and fields)
-        // required for creating a new Contact record using the createRecord function.
-        //can access the API name of the Contact object using CONTACT_OBJECT.objectApiName
         console.log('Inputs:::::::::' + input);
         console.log('Fields:::::::::' + fields);
         createRecord(input)

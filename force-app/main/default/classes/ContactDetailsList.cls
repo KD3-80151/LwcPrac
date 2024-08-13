@@ -21,13 +21,23 @@ public class ContactDetailsList {
         }
     }
 
-     @AuraEnabled(cacheable=true)
-    public static List<Contact> getSortedContact() {
-        try {
-            return [SELECT Id, Name, Phone, Account.Name FROM Contact];
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
+    @AuraEnabled(cacheable=true)
+    public static List<Contact> getContactsSorted(String searchKey) {
+        String searchPattern = '%' + searchKey + '%';
+        return [SELECT Id, Name, Phone, Account.Name FROM Contact WHERE Name LIKE :searchPattern];
     }
-        
+
+
+
+    
+    @AuraEnabled(cacheable=true)
+    public static List<Contact> getSortedContact() {
+    try {
+        return [SELECT Id, Name, Phone, Account.Name FROM Contact];
+    } catch (Exception e) {
+        throw new AuraHandledException(e.getMessage());
+    }
+}
+
+  
 }

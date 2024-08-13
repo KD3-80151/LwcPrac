@@ -1,3 +1,11 @@
+/*
+ * ----------------------------------------------------------------------------------------------------
+ * @description         : Hit Rohit Org to get list of account
+ * @author              : Sagar Kumar
+ * @last modified on    : 20/06/2024
+ * @last modified date  : 
+ * -----------------------------------------------------------------------------------------------------
+ */
 
 @RestResource(urlMapping='/getAccountIds')
 global with sharing class GetAccounts {

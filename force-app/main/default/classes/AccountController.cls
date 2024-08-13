@@ -8,12 +8,28 @@
  */
 
 public with sharing class AccountController {
+    
+    @AuraEnabled(cacheable=true)
+public static List<Account> getAccountLwc(){
+    try {
+        return [SELECT Id, Name FROM Account LIMIT 5];
+    } catch (Exception e) {
+        throw new AuraHandledException(e.getMessage());
+    }
+}
+
+    
     @AuraEnabled(cacheable=true)
     public static List<Account> searchAccounts(String searchKey) {
         String key = '%' + searchKey + '%';
         return [SELECT Id, Name FROM Account WHERE Name LIKE :key];
     }
     
+    @AuraEnabled(cacheable=true)
+    public static List<Contact> getContactsByAccountId(Id accountId) {
+        return [SELECT Id, FirstName, LastName, Email FROM Contact WHERE AccountId = :accountId];
+    }
+
     @AuraEnabled(cacheable=true)
     public static List<Opportunity> getOpportunitiesByAccountId(String accountId) {
         return [SELECT Id, Name, StageName, Amount, CloseDate FROM Opportunity WHERE AccountId = :accountId];

@@ -14,7 +14,7 @@ export default class BasicCalc extends LightningElement {
         this.number2 = parseFloat(event.target.value);
     }
 
-    debugger;
+    //debugger;
     handleSum() {
         this.result = `Sum: ${this.number1 + this.number2}`;
         console.log(result);

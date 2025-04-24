@@ -14,6 +14,10 @@ trigger AccountTrigger on Account (after insert, before insert, after update, be
 
      // if(trigger.isInsert && trigger.isBefore) ErrorAccountDelete.fieldErrorMessage(Trigger.new);
 
+    if(trigger.isAfter && trigger.isInsert){
+        System.debug('Sagar');
+        AccountChildClass.linkParentWithChild(Trigger.new);
+    }
         
 
         

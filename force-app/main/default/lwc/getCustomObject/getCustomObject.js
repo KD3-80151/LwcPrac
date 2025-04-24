@@ -13,6 +13,7 @@ export default class GetCustomObject extends LightningElement {
     
     @wire(getCustomObject)
     wiredCustomObjects({ error, data }) {
+        debugger;
         if (data) {
             this.objectList = data.map(obj => ({
                 label: obj.label,
@@ -24,6 +25,7 @@ export default class GetCustomObject extends LightningElement {
     }
 
     handleObjectChange(event) {
+        debugger;
         this.selectedObject = event.detail.value;
         this.selectedFields = [];
         this.fieldList = [];
@@ -33,6 +35,7 @@ export default class GetCustomObject extends LightningElement {
     }
 
     handleFieldChange(event) {
+        debugger;
         this.selectedFields = event.detail.value;
     }
 
@@ -46,6 +49,7 @@ export default class GetCustomObject extends LightningElement {
     }
 
     fetchFields(objectName) {
+        debugger;
         getFields({ objectName })
             .then(result => {
                 this.fieldList = result.map(field => ({
@@ -59,6 +63,7 @@ export default class GetCustomObject extends LightningElement {
     }
 
     fetchRecords(objectName, fieldNames) {
+        debugger;
         getRecords({ objectName, fieldNames })
             .then(result => {
                 this.records = result;

@@ -8,6 +8,7 @@ public class OpportunityCrudHandler { //OppoCount__c
         }
         updatedOppo(oppSet);
     }
+    
     public static void isUpdated(List<Opportunity> oppList, Map<Id, Opportunity> oldOppo){
         Set<Id> setId = new Set<Id>();
         for(Opportunity opp: oppList){

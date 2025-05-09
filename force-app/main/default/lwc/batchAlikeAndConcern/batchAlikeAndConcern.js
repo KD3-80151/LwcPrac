@@ -17,6 +17,9 @@ export default class BatchAlikeAndConcern extends LightningElement {
         this.close('close');
     }
     @track batchAmount = 0;
+    
+    @track today = new Date().toISOString().split('T')[0];
+
     TOD =''; AOC =''; RN =''; VN =''; HPS =''; Phone =''; POS =''; TN =''; TID =''; Eway =''; MOT ='';
     picklistValuesAOC = [];
     picklistValuesMOT = [];
@@ -64,6 +67,7 @@ export default class BatchAlikeAndConcern extends LightningElement {
         recordTypeId: '$objectInfo.data.defaultRecordTypeId',
         fieldApiName: PICKLIST_AOC
     })
+
     getPicklistValuesforAOC({ data, error }) {
         if (data) {
             this.picklistValuesAOC = data.values;
@@ -86,18 +90,61 @@ export default class BatchAlikeAndConcern extends LightningElement {
     }
 
     handleAddWarrantyClaims(){
+        debugger;
         this.preSelectedRowIds = this.selectedClaims.map(row => row.Id);
         this.showModal = true;
     }
 
+    handleHPS(event){
+        this.HPS = event.target.value;
+    }
+
+    handlePicklistTransport(event){
+        this.MOT = event.target.value;
+    }
+
+    handleRequestorName(event){
+        this.RN = event.target.value;
+    }
+
+    handlePOS(event){
+        this.POS = event.detail.value;
+    }
+
+    handlePicklistChangeAOC(event){
+        this.AOC = event.target.value;
+        if(this.Phone.length!==10){
+            this.Phone ='';
+        }
+    }
+
+    handlePhone(event){
+        this.Phone = event.target.value.replace(/\D/g,'');
+    }
+
+    restrictNonNumeric(event) {
+        const allowedKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'];
+        const key = event.key;
+
+        if (!/^\d$/.test(key) && !allowedKeys.includes(key)) {
+            event.preventDefault();
+        }
+    }
+
+
     handleRowSelection(){
         debugger;
-        const selectedRows = event.detail.selectedRows;
+        const selectedRows = event.detail.action.selectedRows;
         this.preSelectedRowIds = selectedRows.map(row => row.Id);
     }
 
     handleRowAction(event){
         const actionName = event.detail.action.name;
+        const row = event.detail.row;
+
+        if()
+        
+
     }
 
     handleSelect(){

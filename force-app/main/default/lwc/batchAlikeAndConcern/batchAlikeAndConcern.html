@@ -6,7 +6,7 @@
         <div class="form-container">
             <lightning-input label="Future Id" value="To be generated" disabled class="input-field"></lightning-input>
             <div class="claim-section"> 
-                <lightning-button label="Add WC" onclick={handleAddWarrantyClaims}> </lightning-button>
+                <lightning-button label="Add WC" onclick={handleAddWarrantyClaims} class="action-button"> </lightning-button>
                 <p class="instruction-text">select 1 or more item</p>
             </div>
             <template if:true={selectedClaims.length}>
@@ -34,12 +34,12 @@
                     <lightning-input label="Handover Person" onchange={handleHPS} class="input-field"></lightning-input>
                 </div>
                 <div class="column">
-                    <lightning-input label="Requestor Name" onchange={handleRN} class="input-field"></lightning-input>
+                    <lightning-input label="Requestor Name" onchange={handleRequestorName} class="input-field"></lightning-input>
                 </div>
             </div>
             <div class="row">
                 <div class="column">
-                    <lightning-input label="Phone No." onchange={handlePhone} class="input-field" required></lightning-input>
+                    <lightning-input id="a" label="Phone No." onchange={handlePhone} class="input-field" onkeydown={restrictNonNumeric} onkey required></lightning-input>
                 </div>
                 <div class="column">
                     <lightning-input label="Purpose of Sending" onchange={handlePOS} class="input-field"></lightning-input>
@@ -50,11 +50,12 @@
                     <lightning-combobox 
                         label = "Mode of Transport"
                         placeholder="Select Transport"
-                        options={picklistTransport}
+                        options={picklistValuesMOT}
                         value={valueTransport}
                         onchange={handlePicklistTransport} required>
                     </lightning-combobox>
                 </div>
+                <!-- check do we need to take value in combobox-->
                 <div class="column">
                     <lightning-combobox 
                         label = "Address of Consignee"

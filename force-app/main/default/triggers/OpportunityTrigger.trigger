@@ -39,4 +39,6 @@ trigger OpportunityTrigger on Opportunity (after insert, before insert, after up
     // if (Trigger.isUpdate && Trigger.isAfter) {
     //     OpportunityTotalAmountOnAccount.calculateTotalOppSumRelWithAccnt(Trigger.new, Trigger.oldMap);
     // }
+
+    Tri
  }

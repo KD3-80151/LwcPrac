@@ -11,7 +11,7 @@ export default class GraphQl extends LightningElement {
       query AccountWithName {
         uiapi {
           query {
-            Account((first: 10)(Name : like = {'%Sagar})) {
+            Account(first: 10) {
               edges {
                 node {
                   Id
@@ -33,5 +33,3 @@ export default class GraphQl extends LightningElement {
     this.errors = errors;
   }
 }
-
-

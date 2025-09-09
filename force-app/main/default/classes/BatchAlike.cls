@@ -9,7 +9,6 @@ public with sharing class BatchAlike {
             throw new IllegalArgumentException('Failed to fetch claims' + e.getMessage());
         }
     }
-}
 
     // @AuraEnabled
     // public static Id createBatchAndTagClaims(
@@ -21,3 +20,5 @@ public with sharing class BatchAlike {
     //         throw new AuraHandledException(e.getMessage());
     //     }
     // }
+
+}

@@ -76,4 +76,50 @@ public class ContactTriggerCrudHandler {
             update accountsToUpdate;
         }
     }
+    
+    
+    public static void countInsertedContact(List<Contact> oldContact, List<Contact> newContactToInsert){
+        Set<Id> accntId = new Set<Id>();
+        
+        if(oldContact != null){
+            for(Contact c : oldContact){
+                if(c.AccountId != null){
+                    accntId.add(c.AccountId);
+                }
+            }
+        }
+        
+        if(newContactToInsert != null){ 
+            System.debug('newContactToInsert' + newContactToInsert);
+            for(Contact c : newContactToInsert){
+                if(c.AccountId != null){
+                    accntId.add(c.AccountId);
+                }
+            }
+        }
+        
+        if(accntId.isEmpty()) return;
+        //if(newContactToInsert.isEmpty()) return;
+        
+        map<Id, Integer> countContact = new  map<Id, Integer>();
+        
+        for(AggregateResult ar: [select AccountId, count(Id) contactCount from Contact where AccountId IN :accntId GROUP BY AccountId]){ // countContact is alias 
+            countContact.put((Id)ar.get('AccountId') , (Integer)ar.get('contactCount')); // this line need to understand
+        }
+        
+        List<Account> acctToUpdate = new List<Account>();
+        for(Id accnid : accntId){
+			Integer count = countContact.containsKey(accnid) ? countContact.get(accnid) : 0;
+            acctToUpdate.add(new Account( 
+            	Id = accnid, 
+                New_Contact_Count__c = count
+            ));
+            
+            if(!acctToUpdate.isEmpty()){
+                update acctToUpdate;
+            }
+        }
+        
+    }
+
 }

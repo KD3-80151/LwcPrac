@@ -1,7 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-export default class ShowToastExampleComponent extends LightningElement {]
+export default class ShowToastExampleComponent extends LightningElement {
     @api toastTitle;
     @api toastMessage;
 
@@ -10,6 +10,7 @@ export default class ShowToastExampleComponent extends LightningElement {]
             new ShowToastEvent({
                 title: this.toastTitle,
                 message: this.toastMessage,
+                variant: 'success'
             }),
         );
     }

@@ -14,6 +14,7 @@ public with sharing class OpportunityTotalAmountOnAccount {
         updateAccountTotalOpp(accountIds);
 
     }
+
     
     public static void updateAccountTotalOpp(Set<Id> accountIds){
         if (accountIds.isEmpty()) {

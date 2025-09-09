@@ -1,4 +1,4 @@
-trigger OpportunityTrigger on Opportunity (after insert, before insert, after update, before update, after delete, before delete) {
+trigger OpportunityTrigger on Opportunity (after insert, before insert, after update, before update, after delete, before delete, after undelete) {
 //     if(Trigger.isBefore && Trigger.isDelete){
 //        OpportunityTriggerHandler.OpportunityClosed(Trigger.old);
 //    }
@@ -39,6 +39,14 @@ trigger OpportunityTrigger on Opportunity (after insert, before insert, after up
     // if (Trigger.isUpdate && Trigger.isAfter) {
     //     OpportunityTotalAmountOnAccount.calculateTotalOppSumRelWithAccnt(Trigger.new, Trigger.oldMap);
     // }
-
-    Tri
+    
+    // this is also a way to handle trigger in bulk 
+    if(trigger.isAfter){
+        if(trigger.isInsert || trigger.isUpdate || trigger.isUndelete){
+            OpportunityTriggerHandler.updateAccountRollup(trigger.newMap.keySet());
+        }
+        if(trigger.isDelete){
+            OpportunityTriggerHandler.updateAccountRollup(trigger.newMap.keySet());
+        }
+    }
  }

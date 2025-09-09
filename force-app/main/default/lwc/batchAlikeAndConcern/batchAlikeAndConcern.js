@@ -67,7 +67,6 @@ export default class BatchAlikeAndConcern extends LightningElement {
         recordTypeId: '$objectInfo.data.defaultRecordTypeId',
         fieldApiName: PICKLIST_AOC
     })
-
     getPicklistValuesforAOC({ data, error }) {
         if (data) {
             this.picklistValuesAOC = data.values;
@@ -90,7 +89,6 @@ export default class BatchAlikeAndConcern extends LightningElement {
     }
 
     handleAddWarrantyClaims(){
-        debugger;
         this.preSelectedRowIds = this.selectedClaims.map(row => row.Id);
         this.showModal = true;
     }
@@ -105,10 +103,6 @@ export default class BatchAlikeAndConcern extends LightningElement {
 
     handleRequestorName(event){
         this.RN = event.target.value;
-    }
-
-    handlePOS(event){
-        this.POS = event.detail.value;
     }
 
     handlePicklistChangeAOC(event){
@@ -134,17 +128,12 @@ export default class BatchAlikeAndConcern extends LightningElement {
 
     handleRowSelection(){
         debugger;
-        const selectedRows = event.detail.action.selectedRows;
+        const selectedRows = event.detail.selectedRows;
         this.preSelectedRowIds = selectedRows.map(row => row.Id);
     }
 
     handleRowAction(event){
         const actionName = event.detail.action.name;
-        const row = event.detail.row;
-
-        if()
-        
-
     }
 
     handleSelect(){

@@ -16,6 +16,7 @@ export default class DependentPicklist extends LightningElement {
     }
 
     loadObjects() {
+        debugger;
         getAllObjects()
             .then((result) => {
                 if (result) {
@@ -33,12 +34,16 @@ export default class DependentPicklist extends LightningElement {
     }
 
     onObjectChange(event) {
+        debugger;
         this.objectName = event.detail.value;
+        console.log('Selected object:', this.objectName);
+        
         this.picklistFieldsLabel = this.objectName + ' Picklist Fields';
         this.handleGetPicklistFields();
     }
 
     handleGetPicklistFields() {
+        debugger;
         getPicklistTypeFields({ strObjectName: this.objectName })
             .then((result) => {
                 this.lstOfPicklistFields = [];
@@ -52,12 +57,16 @@ export default class DependentPicklist extends LightningElement {
     }
 
     getPicklistFieldsOptions(event) {
+        debugger;
         this.fieldSelectedToGetPicklistTypeField = event.detail.value;
+        console.log('Selected field:', this.fieldSelectedToGetPicklistTypeField);
+
         this.getPicklistValuesForSelectedPicklistField();
     }
 
     getPicklistValuesForSelectedPicklistField() {
-        getPickListvaluesByFieldName({ objectName: this.objectName, pickListFieldName: this.fieldSelectedToGetPicklistTypeField })
+        debugger;
+        getPickListvaluesByFieldName({ selectedObjectName: this.objectName, selectedField: this.fieldSelectedToGetPicklistTypeField })
             .then((result) => {
                 if (result) {
                     this.objectFieldOptionsList = [];

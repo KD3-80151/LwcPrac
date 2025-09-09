@@ -7,11 +7,11 @@ import FIRSTNAME_FIELD from '@salesforce/schema/Contact.FirstName';
 import LASTNAME_FIELD from '@salesforce/schema/Contact.LastName';
 import EMAIL_FIELD from '@salesforce/schema/Contact.Email';
 import PHONE_FIELD from '@salesforce/schema/Contact.Phone';
+import { CloseActionScreenEvent } from 'lightning/actions';
 
 export default class ContactCreation extends LightningElement {
     
     @api recordId;
-
     @track contact={
         firstName:'',
         lastName: '',
@@ -20,40 +20,35 @@ export default class ContactCreation extends LightningElement {
     }
 
     handleChange(event){
-        const {name , value} = event.target; // array destructuring
-        //debugger;
-        
-        console.log('Name:', name);
-        console.log('Value:', value);
-        this.contact = {...this.contact, [name]: value } // ...this.contact initial value is null
-        console.log('Updated Contact:', this.contact);
+        const {name , value} = event.target;
+        this.contact = {...this.contact, [name]: value }
     }
 
     createContact(){
         debugger;
         const fields = {};
         console.log('Creating contact...');
-
+        console.log('RecordId:', this.recordId);
         fields[FIRSTNAME_FIELD.fieldApiName] = this.contact.firstName;
         fields[LASTNAME_FIELD.fieldApiName] = this.contact.lastName;
         fields[EMAIL_FIELD.fieldApiName] = this.contact.email;
         fields[PHONE_FIELD.fieldApiName] = this.contact.phone;
         fields['AccountId'] = this.recordId;
 
+
         const input = {apiName: CONTACT_OBJECT.objectApiName, fields };
-        //constructs the recordInput object with the necessary data (apiName and fields)
-        // required for creating a new Contact record using the createRecord function.
-        //can access the API name of the Contact object using CONTACT_OBJECT.objectApiName
         console.log('Inputs:::::::::' + input);
         console.log('Fields:::::::::' + fields);
         createRecord(input)
-            .then(()=> {
-                this.showToast('Success', 'Contact created', 'success');
-                this.resetForm();
-            })
-            .catch(error)
+        .then(() => {
+            this.showToast('Success', 'Contact created', 'success');
+            this.resetForm();
+            this.dispatchEvent(new CloseActionScreenEvent());
+        })
+            .catch(error => {
+                console.error('Error while creating contact:', error);
                 this.showToast('Error', 'Contact not created', 'error');
-            ; 
+            });
     }
     
     showToast(title, message, variant){
@@ -74,10 +69,4 @@ export default class ContactCreation extends LightningElement {
 
         }
     }
-
-
-    
-
-
-    
 }

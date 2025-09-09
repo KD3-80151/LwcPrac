@@ -28,5 +28,18 @@ trigger ContactTrigger on Contact (after insert, before insert,after delete, bef
     // if (trigger.isDelete && trigger.isAfter) {
     //     UpdateAccountTotalFields.deleteContact(Trigger.old);
     // }
+    // 
+    
+    if(trigger.isAfter){
+        if(trigger.isInsert){
+            ContactTriggerCrudHandler.countInsertedContact(null, trigger.new);
+        }
+        else if(trigger.isUpdate){
+            ContactTriggerCrudHandler.countInsertedContact(trigger.old, trigger.new);
+        }
+        else if(trigger.isDelete){
+             ContactTriggerCrudHandler.countInsertedContact(trigger.old, null);
+        }
+    }
 
 }

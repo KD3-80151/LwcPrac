@@ -17,6 +17,6 @@ export default class LightningRecordPicker extends LightningElement {
  
    handleRecordChange(event) {
     debugger;
-      this.contactId = event.detail.recordId;
+       this.contactId = event.detail.recordId;
    }
 }

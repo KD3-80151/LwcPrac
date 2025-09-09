@@ -10,8 +10,6 @@
 //!
 //!
 
-//? Dynamically Pass the Slot Name in JavaScript
-
 import { LightningElement, api } from 'lwc';
 
 export default class DynamicSlotChild extends LightningElement {

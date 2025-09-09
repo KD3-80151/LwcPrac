@@ -18,6 +18,10 @@ trigger AccountTrigger on Account (after insert, before insert, after update, be
         System.debug('Sagar');
         AccountChildClass.linkParentWithChild(Trigger.new);
     }
+    
+    if(trigger.isAfter && trigger.isUpdate){
+        AccountTriggerHandler.handleIndustryChanges(Trigger.new, Trigger.oldMap);
+    }
         
 
         

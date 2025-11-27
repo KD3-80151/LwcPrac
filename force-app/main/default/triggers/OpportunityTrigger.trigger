@@ -49,4 +49,16 @@ trigger OpportunityTrigger on Opportunity (after insert, before insert, after up
             OpportunityTriggerHandler.updateAccountRollup(trigger.newMap.keySet());
         }
     }
+
+    if (trigger.isAfter && trigger.isUpdate) {
+        if (trigger.isAfter) {
+            OpportunityTriggerHandler.handleOpportunityStageChange(Trigger.new, Trigger.oldMap);
+        }  
+    }
+
+    if(trigger.isBefore){
+        if(trigger.isUpdate && trigger.isBefore){
+            OpportunityTriggerHandler.handleDupOppName(trigger.new, trigger.oldMap);
+        }
+    }
  }

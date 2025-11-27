@@ -79,5 +79,8 @@ public class OpportunityTriggerHandler {
                 isExecuting = false;
             }
     }
+
+    public static void handleDupOppName(List<Opportunity> newList, Map<>)
+    
         
     }

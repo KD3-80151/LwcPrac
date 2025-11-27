@@ -24,6 +24,4 @@ public with sharing class MetadataUtils implements Metadata.DeployCallback{
             
         }
     }
-
-    
 }

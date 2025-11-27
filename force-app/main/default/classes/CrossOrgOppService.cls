@@ -4,6 +4,7 @@ public with sharing class CrossOrgOppService {
 
     public class CrossOrgOppException extends Exception {}
 
+    
     public class ProductLineInput {
         public String productCode;  
         public Decimal quantity;    
@@ -17,6 +18,7 @@ public with sharing class CrossOrgOppService {
     }
 
     public static errorResultWrapper createOppWithLinesFromJson(String payloadJson) {
+        system.debug('createOppWithLinesFromJson get calleld:::::::>>');
         system.debug('payLoadjson::>>' +payloadJson);
 
         if (String.isBlank(payloadJson)) {
@@ -26,10 +28,12 @@ public with sharing class CrossOrgOppService {
             return error1;
         }
 
+        //!parse json into map ----------------------------
         Map<String, Object> oppFields    = (Map<String, Object>) JSON.deserializeUntyped(payloadJson);
         String oppName              = (String) oppFields.get('oppName');
         String stageName            = (String) oppFields.get('stageName');
         String closeDateStr         = (String) oppFields.get('closeDate');
+        system.debug('closeDateStr::>>' + closeDateStr);
         String accountIdInTarget    = (String) oppFields.get('accountIdInTarget');
         String pricebook2IdInTarget = (String) oppFields.get('pricebook2IdInTarget');
 
@@ -40,13 +44,15 @@ public with sharing class CrossOrgOppService {
         }
         system.debug('closeDate::>>' + closeDate);
 
+        //!parse productline array  // read productlines from json array  
         List<Object> prodDlines = (List<Object>) oppFields.get('productLines');
         system.debug('prodDlines::>>' + prodDlines);
         List<ProductLineInput> productLines = new List<ProductLineInput>();
 
         if (prodDlines != null) {
             for (Object objTOUpdaate : prodDlines) {
-                Map<String, Object> lineMap = (Map<String, Object>) objTOUpdaate;
+                Map<String, Object> lineMap = (Map<String, Object>) objTOUpdaate; //!-- for each item cast to map string
+                System.debug('lienMapo:::::>>' + lineMap);
                 ProductLineInput pli = new ProductLineInput();
                 pli.productCode = (String) lineMap.get('productCode');
                 pli.quantity    = (lineMap.containsKey('quantity') && lineMap.get('quantity') != null) ? (Decimal) lineMap.get('quantity') : null;
@@ -54,11 +60,11 @@ public with sharing class CrossOrgOppService {
                 productLines.add(pli);
             }
         }
-
         return createOppWithLines(oppName, stageName, closeDate, accountIdInTarget, pricebook2IdInTarget, productLines);
     }
 
     public static errorResultWrapper createOppWithLines(String oppName, String stageName, Date closeDate, String accountIdInTarget, String pricebook2IdInTarget, List<ProductLineInput> productLines) {
+        System.debug('createOppWithLines get callled::::::::');
         System.debug('oppName: ' + oppName);
         System.debug('stageName: ' + stageName);
         System.debug('closeDate: ' + closeDate);
@@ -66,14 +72,15 @@ public with sharing class CrossOrgOppService {
         System.debug('pricebook2IdInTarget: ' + pricebook2IdInTarget);
         System.debug('productLines: ' + productLines);
 
+        //!---------------now need to prepare response objects::::----------
         errorResultWrapper res = new errorResultWrapper();
 
         try {
             validateRequest(oppName, stageName, closeDate, accountIdInTarget, pricebook2IdInTarget, productLines);
 
             Map<String, PricebookEntryInfo> pbeByCode = fetchPricebookEntriesByProductCode(productLines, pricebook2IdInTarget);
-
-            List<String> missingCodes = new List<String>();
+            System.debug('pbeByCOde:::::>>>' + pbeByCode);
+            List<String> missingCodes = new List<String>(); //to check for missing product codes 
             for (ProductLineInput pli : productLines) {
                 if (!pbeByCode.containsKey(pli.productCode.trim())) {
                     missingCodes.add(pli.productCode);
@@ -86,7 +93,7 @@ public with sharing class CrossOrgOppService {
                 return res;
             }
 
-            String requestBody = buildCompositeTreePayload(oppName, stageName, closeDate, accountIdInTarget, pricebook2IdInTarget, productLines, pbeByCode);
+            String requestBody = compPayLOadCreated(oppName, stageName, closeDate, accountIdInTarget, pricebook2IdInTarget, productLines, pbeByCode);
             
             // HttpResponse postResp = calloutToTargetOrg(
             //     'POST',
@@ -107,11 +114,11 @@ public with sharing class CrossOrgOppService {
 
                     for (Object requestObject : resultList) {
                         Map<String, Object> requestedMapping = (Map<String, Object>) requestObject;
-                        List<Object> errs = (List<Object>) requestedMapping.get('errors');
-                        if (errs != null && !errs.isEmpty()) {
-                            for (Object toShowErrors : errs) {
-                                Map<String, Object> eMap = (Map<String, Object>) toShowErrors;
-                                String msg = (String) eMap.get('message');
+                        List<Object> errsObject = (List<Object>) requestedMapping.get('errors');
+                        if (errsObject != null && !errsObject.isEmpty()) {
+                            for (Object toShowErrors : errsObject) {
+                                Map<String, Object> errorMap = (Map<String, Object>) toShowErrors;
+                                String msg = (String) errorMap.get('message');
                                 if (msg != null) errorMessages.add(msg);
                             }
                         }
@@ -149,6 +156,8 @@ public with sharing class CrossOrgOppService {
     }
 
     private static void validateRequest(String oppName, String stageName, Date closeDate, String accountIdInTarget, String pricebook2IdInTarget, List<ProductLineInput> productLines) {
+        system.debug('validateRequestss gets calledddddddddddddddd:::--- ');
+        system.debug('productLines::>>' + productLines);
         if (String.isBlank(oppName)) {
             throw new CrossOrgOppException('Opportunity Name is required.');
         }
@@ -169,6 +178,7 @@ public with sharing class CrossOrgOppService {
         }
 
         for (ProductLineInput pli : productLines) {
+            System.debug('pli::>>' + pli);
             if (pli == null || String.isBlank(pli.productCode)) {
                 throw new CrossOrgOppException('Product Code is mandatory for all product lines.');
             }
@@ -184,8 +194,12 @@ public with sharing class CrossOrgOppService {
         Decimal unitPrice;
     }
 
+    //!::::::::::to fetch Pricebook entry records by product code:::::::::::::::::
     private static Map<String, PricebookEntryInfo> fetchPricebookEntriesByProductCode(list<ProductLineInput> productLines, String pricebook2Id) {
-        Set<String> codeSet = new Set<String>();
+        System.debug('fetchPricebookEntriesByProductCode called::::::::::::::::::');
+        system.debug('productLines::>>' + productLines);
+        system.debug('pricevbpook12Ids::::' + pricebook2Id);
+        Set<String> codeSet = new Set<String>(); 
         for (ProductLineInput pli : productLines) {
             if (!String.isBlank(pli.productCode)) {
                 codeSet.add(pli.productCode.trim());
@@ -197,13 +211,15 @@ public with sharing class CrossOrgOppService {
         }
 
         List<String> codeList = new List<String>();
-        for (String c : codeSet) {
-            String escaped = c.replace('\'', '\\\'');
+        for (String codeSetToReplace : codeSet) {
+            String escaped = codeSetToReplace.replace('\'', '\\\'');
             codeList.add('\'' + escaped + '\'');
         }
         String inClause = String.join(codeList, ',');
-
+        system.debug('inClause:::>>>>>>' + inClause);
+        system.debug('codeList:::>>>>>>' + codeList);
         String escapedPbId = pricebook2Id.replace('\'', '\\\'');
+        System.debug('eescapedPbId::>>' + escapedPbId);
         String soql =
             'SELECT Id, Product2.ProductCode, Pricebook2Id, UnitPrice ' +
             'FROM PricebookEntry ' +
@@ -212,10 +228,13 @@ public with sharing class CrossOrgOppService {
             'AND Product2.ProductCode IN (' + inClause + ')';
 
         String encodedSoql = EncodingUtil.urlEncode(soql, 'UTF-8');
+        system.debug('encodedSoql:::>>>>>>' + encodedSoql);
+        system.debug('soql:::>>>>>>' + soql);
         String url = '/services/data/v65.0/query/?q=' + encodedSoql;
-
-        //HttpResponse resp = calloutToTargetOrg('GET', url, null);
+        system.debug('url:::>>>>>>' + url);
+        system.debug('NAMED_CREDENTIAL:::>>>>>>' + NAMED_CREDENTIAL);        //HttpResponse resp = calloutToTargetOrg('GET', url, null);
         HttpResponse resp = CrossOrgHttpUtil.get(NAMED_CREDENTIAL, url);
+        system.debug('resp:::>>>>>>' + resp);
 
         if (resp.getStatusCode() < 200 || resp.getStatusCode() >= 300) {
             throw new CrossOrgOppException(
@@ -226,9 +245,11 @@ public with sharing class CrossOrgOppService {
 
         Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(resp.getBody());
         List<Object> records = (List<Object>) body.get('records');
+        system.debug('records:::>>>>>>>>>>>' + records);
 
         Map<String, PricebookEntryInfo> result = new Map<String, PricebookEntryInfo>();
 
+        //!if prcebook is there parse json and create pricebookentryinfo and fill id, unit price and product code
         for (Object oppRecords : records) {
             Map<String, Object> rec = (Map<String, Object>) oppRecords;
 
@@ -249,15 +270,20 @@ public with sharing class CrossOrgOppService {
         return result;
     }
 
-
-    private static String buildCompositeTreePayload(String oppName, String stageName, Date closeDate, String accountIdInTarget, String pricebook2IdInTarget, List<ProductLineInput> productLines, Map<String, PricebookEntryInfo> pbeByCode) {
+    //!to build json compatible with: /services/data/v65.0/composite/tree/Opportunity
+    private static String compPayLOadCreated(String oppName, String stageName, Date closeDate, String accountIdInTarget, String pricebook2IdInTarget, List<ProductLineInput> productLines, Map<String, PricebookEntryInfo> pbeByCode) {
+        system.debug('compPayLOadCreated callledddddddddddddddddd');
         List<Object> oliRecords = new List<Object>();
         Integer index = 1;
 
         for (ProductLineInput pli : productLines) {
             String trimmedCode = pli.productCode.trim();
+            System.debug('trimmedCOde::::' + trimmedCode);
             PricebookEntryInfo pbeInfo = pbeByCode.get(trimmedCode);
 
+            //for opportunity line items
+            system.debug('pbeInfo::>>' + pbeInfo);
+            system.debug('pli::>>' + pli);
             Map<String, Object> oli = new Map<String, Object>();
             oli.put('attributes', new Map<String, Object>{
                 'type' => 'OpportunityLineItem',
@@ -291,7 +317,7 @@ public with sharing class CrossOrgOppService {
 
         Map<String, Object> oppFields1 = new Map<String, Object>();
         oppFields1.put('records', new List<Object>{ opp });
-
+        System.debug('oppFields1::>>' + oppFields1);
         return JSON.serialize(oppFields1);
     }
 
